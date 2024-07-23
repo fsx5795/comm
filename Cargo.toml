@@ -1,0 +1,12 @@
+[package]
+name = 'comm'
+version = '0.0.0'
+
+[build-dependencies]
+tauri-build = { version = "*", features = [] }
+
+[dependencies]
+tauri = { version = "*", features = [] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
