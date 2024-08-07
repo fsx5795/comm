@@ -8,4 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	    select.appendChild(option)
 	}
     })
+    document.querySelector('button').onclick = () => {
+	invoke('start_udp', { ip: document.querySelector('select').value, port: parseInt(document.querySelector('input').value) })
+    }
 })
