@@ -9,6 +9,14 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
     })
     document.querySelector('button').onclick = () => {
-		invoke('start_udp', { ip: document.querySelector('select').value, port: parseInt(document.querySelector('input').value) })
+		const radios = document.getElementsByName('network')
+        for (let i in radios) {
+            if (radios[i].checked == true) {
+				console.log(radios[i].value)
+                if (radios[i].value === "udp")
+					invoke('start_udp', { ip: document.querySelector('select').value, port: parseInt(document.querySelector('input').value) })
+                break
+            }
+        }
     }
 })
