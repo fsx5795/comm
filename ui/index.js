@@ -1,22 +1,46 @@
-const { invoke } = window.__TAURI__.core
-window.addEventListener('DOMContentLoaded', () => {
-    const select = document.querySelector('select')
-    invoke('get_ip').then((msg) => {
-		for (let i = 0; i < msg.length; ++i) {
-			const option = document.createElement('option')
-			option.innerText = msg[i]
-			select.appendChild(option)
-		}
+function inputValueChanged() {
+    const input = document.querySelector('input')
+    input.value = input.value.replace(/\D/g, '')
+}
+const { listen } = window.__TAURI__.event
+const unlisten = async() => {
+    await listen('error', event => {
+        const dialog = document.querySelector('dialog')
+        dialog.querySelector('button').addEventListener('click', () => { dialog.close() })
+        const ps = dialog.querySelectorAll('p')
+        ps[0].innerText = '错误'
+        ps[1].innerText = event.payload
+        dialog.showModal()
     })
-    document.querySelector('button').onclick = () => {
-		const radios = document.getElementsByName('network')
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form')
+    form.addEventListener('submit', event => {
+        event.preventDefault()
+    })
+    const select = form.querySelector('select')
+    const input = form.querySelector('input')
+    const multinput = document.getElementById('multaddr')
+    //提交按钮
+    form.querySelector('button').onclick = () => {
+        const radios = document.getElementsByName('network')
         for (let i in radios) {
             if (radios[i].checked == true) {
-				console.log(radios[i].value)
                 if (radios[i].value === "udp")
-					invoke('start_udp', { ip: document.querySelector('select').value, port: parseInt(document.querySelector('input').value) })
+                    invoke('start_udp', { ip: select.options[select.selectedIndex].value, port: parseInt(input.value), multaddr: multinput.value })
                 break
             }
         }
     }
+    input.addEventListener('input', () => inputValueChanged())
+    input.addEventListener('afterpaste', () => inputValueChanged())
+    const { invoke } = window.__TAURI__.core
+    invoke('get_ip').then((addrs) => {
+        addrs.forEach((addr, _) => {
+            const option = document.createElement('option')
+            option.innerText = addr
+            select.appendChild(option)
+        })
+    })
 })
+unlisten()

@@ -6,17 +6,31 @@
 	<script src="index.js" charset="utf-8"></script>
     </head>
     <body>
-	<div>
-	    <select></select>
-	    <input type="number"/>
+		<dialog>
+            <p></p>
+            <p></p>
+            <button>确定</button>
+        </dialog>
 		<div>
-			<label>TCP</label>
-			<input type="radio" name="network" value="tcp" checked />
-			<label>UDP</label>
-			<input type="radio" name="network" value="udp" />
+			<form method="get" action="#">
+				本机IP地址：
+				<select></select>
+				端口：
+				<input type="text" autocomplete="on" minlength="2" maxlength="4"/>
+				<div>
+					<label>TCP</label>
+					<input type="radio" name="network" value="tcp" checked />
+					<label>UDP</label>
+					<input type="radio" name="network" value="udp" />
+				</div>
+				组播地址：
+				<input id="multaddr" type="text"/>
+				<button type="submit"></button>
+			</form>
+			<textarea></textarea>
+			<textarea></textarea>
+			<button>发送</button>
 		</div>
-	    <button>确定</button>
-	</div>
 	<div>
 	    <textarea></textarea>
 	<div>
