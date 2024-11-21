@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     input.addEventListener('input', () => inputValueChanged())
     input.addEventListener('afterpaste', () => inputValueChanged())
-    const { invoke } = window.__TAURI__.core
+    const invoke = window.__TAURI__.core.invoke
     invoke('get_ip').then((addrs) => {
         addrs.forEach((addr, _) => {
             const option = document.createElement('option')
