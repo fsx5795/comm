@@ -6,7 +6,9 @@
   "app": {
     "withGlobalTauri": true,
     "windows": [
-      {}
+      {
+          "theme": "Dark"
+      }
     ]
   }
 }
